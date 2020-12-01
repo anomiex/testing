@@ -14,7 +14,7 @@ jobs:
   bar:
     name: Excluded matrix test (${{ matrix.thing }})
     runs-on: ubuntu-latest
-    if: false
+    if: false && matrix.thing == matrix.thing
 
     strategy:
       matrix:
