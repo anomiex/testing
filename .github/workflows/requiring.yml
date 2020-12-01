@@ -10,3 +10,15 @@ jobs:
 
     steps:
       - run: /bin/true
+
+  bar:
+    name: Excluded matrix test (${{ matrix.thing }})
+    runs-on: ubuntu-latest
+    if: false
+
+    strategy:
+      matrix:
+        thing: [ "1", "2" ]
+
+    steps:
+      - run: /bin/true
