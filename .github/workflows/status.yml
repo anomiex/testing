@@ -57,10 +57,10 @@ jobs:
       - name: Failing step
         run: /bin/false
 
-      - name: "If with no status function"
-        if: 'a' == 'a'
+      - name: If with no status function
+        if: ${{ 'a' == 'a' }}
         run: /bin/true
 
-      - name: "If with status function"
-        if: 'a' == 'a' && always()
+      - name: If with status function
+        if: ${{ 'a' == 'a' && always() }}
         run: /bin/true
