@@ -48,3 +48,19 @@ jobs:
               "description": "Testing a custom status",
               "context": "Custom status?"
             }'
+
+  if_and_status_functions:
+    name: Test `if` and status functions
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Failing step
+        run: /bin/false
+
+      - name: If with no status function
+        if: 'a' == 'a'
+        run: /bin/true
+
+      - name: If with status function
+        if: 'a' == 'a' && always()
+        run: /bin/true
