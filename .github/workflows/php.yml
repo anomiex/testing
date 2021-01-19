@@ -12,7 +12,7 @@ jobs:
           php-version: "7.3"
           tools: composer
           coverage: none
-          extensions: mysql, imagick, phpdbg
+          extensions: mysql, imagick
       - name: Tool versions
         run: |
           which php
