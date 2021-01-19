@@ -1,0 +1,21 @@
+name: phpdbg
+on:
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: "7.3"
+          tools: composer
+          coverage: none
+          extensions: mysql, imagick, phpdbg
+      - name: Tool versions
+        run: |
+          which php
+          php --version
+          which phpdbg
+          phpdbg --version
