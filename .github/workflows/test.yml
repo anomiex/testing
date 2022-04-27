@@ -16,3 +16,13 @@ jobs:
         env:
           FOO: ${{ secrets.FOO }}
         run: if [[ "$FOO" == "foobar" ]]; then echo "ok"; else echo "nope"; fi
+
+  matrix:
+    name: Matrix ${{ matrix.name }}
+    runs-on: ubuntu-latest
+    if: false
+    strategy:
+      matrix:
+        name: [ A, B, C ]
+    steps:
+      - run: false
