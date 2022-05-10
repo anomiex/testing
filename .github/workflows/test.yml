@@ -16,13 +16,19 @@ jobs:
         env:
           FOO: ${{ secrets.FOO }}
         run: if [[ "$FOO" == "foobar" ]]; then echo "ok"; else echo "nope"; fi
+      - name: Test step summary
+        run: echo 'Step summary for Test / Test' >> $GITHUB_STEP_SUMMARY
 
-  matrix:
-    name: Matrix ${{ matrix.name }}
+  job2:
+    name: Test2
     runs-on: ubuntu-latest
-    if: false
-    strategy:
-      matrix:
-        name: [ A, B, C ]
     steps:
-      - run: false
+      - name: Test step summary
+        run: echo 'Step 1 summary for Test / Test2' >> $GITHUB_STEP_SUMMARY
+      - name: Test step summary
+        run: echo 'Step 2 summary for Test / Test2' >> $GITHUB_STEP_SUMMARY
+      - name: Test step summary
+        run: echo -n 'Step 3 summary for Test / Test2' >> $GITHUB_STEP_SUMMARY
+      - name: Test step summary
+        run: echo 'Step 4 summary for Test / Test2' >> $GITHUB_STEP_SUMMARY
+
