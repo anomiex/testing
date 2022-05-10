@@ -26,7 +26,9 @@ jobs:
       - name: Test step summary
         run: echo 'Step 1 summary for Test / Test2' >> $GITHUB_STEP_SUMMARY
       - name: Test step summary
-        run: echo 'Step 2 summary for Test / Test2' >> $GITHUB_STEP_SUMMARY
+        run: |
+          echo '::error::Random error'
+          echo 'Step 2 summary for Test / Test2' >> $GITHUB_STEP_SUMMARY
       - name: Test step summary
         run: echo -n 'Step 3 summary for Test / Test2' >> $GITHUB_STEP_SUMMARY
       - name: Test step summary
