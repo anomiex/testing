@@ -1,33 +1,15 @@
-name: Test
+name: Test dispatch
 on:
   push:
-    branches: [ '🙄' ]
 
 jobs:
   job:
     name: Test
     runs-on: ubuntu-latest
     steps:
-      - name: Env
-        run: env
-      - name: Event data
-        run: cat $GITHUB_EVENT_PATH
-      - name: FOO
-        env:
-          FOO: ${{ secrets.FOO }}
-        run: if [[ "$FOO" == "foobar" ]]; then echo "ok"; else echo "nope"; fi
-      - name: Test step summary
-        run: echo 'Step summary for Test / Test' >> $GITHUB_STEP_SUMMARY
-
-  job2:
-    name: Test2
-    runs-on: ubuntu-latest
-    steps:
-      - name: One
-        run: echo 1
-      - name: Wait
-        timeout-minutes: 1
-        continue-on-error: true
-        run: sleep 300
-      - name: Two
-        run: echo 1
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Turnstile
+        uses: ./.github/actions/turnstile
+      - name: Work 
+        run: sleep 120
