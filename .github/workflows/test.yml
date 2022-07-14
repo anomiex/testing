@@ -23,14 +23,11 @@ jobs:
     name: Test2
     runs-on: ubuntu-latest
     steps:
-      - name: Test step summary
-        run: echo 'Step 1 summary for Test / Test2' >> $GITHUB_STEP_SUMMARY
-      - name: Test step summary
-        run: |
-          echo '::error::Random error'
-          echo 'Step 2 summary for Test / Test2' >> $GITHUB_STEP_SUMMARY
-      - name: Test step summary
-        run: echo -n 'Step 3 summary for Test / Test2' >> $GITHUB_STEP_SUMMARY
-      - name: Test step summary
-        run: echo 'Step 4 summary for Test / Test2' >> $GITHUB_STEP_SUMMARY
-
+      - name: One
+        run: echo 1
+      - name: Wait
+        timeout-minutes: 1
+        continue-on-error: true
+        run: sleep 300
+      - name: Two
+        run: echo 1
