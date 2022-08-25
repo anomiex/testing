@@ -17,16 +17,3 @@ jobs:
         run: if [[ "$FOO" == "foobar" ]]; then echo "ok"; else echo "nope"; fi
       - name: Test step summary
         run: echo 'Step summary for Test / Test' >> $GITHUB_STEP_SUMMARY
-
-  job2:
-    name: Test2
-    runs-on: ubuntu-latest
-    steps:
-      - name: One
-        run: echo 1
-      - name: Wait
-        timeout-minutes: 1
-        continue-on-error: true
-        run: sleep 300
-      - name: Two
-        run: echo 1
