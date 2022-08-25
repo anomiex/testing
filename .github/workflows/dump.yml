@@ -1,0 +1,15 @@
+name: dump
+on:
+  pull_request:
+
+jobs:
+  dump:
+    name: dump
+    runs-on: ubuntu-latest
+    steps:
+      - name: Dump env
+        run: env
+      - name: Dump github object
+        env:
+          GH: ${{ toJSON(github) }}
+        run: echo "$GH"
