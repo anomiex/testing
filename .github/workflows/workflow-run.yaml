@@ -9,6 +9,7 @@ jobs:
   test:
     name: Check run?
     runs-on: ubuntu-latest
+    if: github.event.workflow_run.event == 'pull_request'
 
     steps:
       - name: Env
@@ -18,7 +19,7 @@ jobs:
       - name: Check run?
         env:
           TOKEN: ${{ github.token }}
-          SHA: ${{ event.workflow_run.head_sha }}
+          SHA: ${{ github.event.workflow_run.head_sha }}
         run: |
           curl -v -X POST \
             --header "authorization: token $TOKEN" \
