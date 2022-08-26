@@ -30,5 +30,10 @@ jobs:
               "details_url": $url,
               "status": "in_progress",
               "started_at": now | todateiso8601,
+              "output": {
+                "title": "Check run title",
+                "summary": "Check run summary",
+                "text": "Check run text",
+              },
             }')"
 
