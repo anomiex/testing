@@ -1,0 +1,28 @@
+name: Caller
+on:
+  pull_request:
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Build
+        run: |
+          echo "ok" > foo.txt
+
+      - name: Store build as artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: build
+          path: foo.txt
+          # Only need to retain for a day since the beta builder slurps it up to distribute.
+          retention-days: 1
+
+  post-build:
+    name: Post-build
+    needs: build
+    uses: ./.github/workflows/callee.yml

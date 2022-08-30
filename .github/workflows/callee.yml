@@ -1,0 +1,24 @@
+name: Callee
+on:
+  workflow_call:
+
+jobs:
+  job:
+    name: Find artifact
+    runs-on: ubuntu-latest
+    steps:
+      - name: env
+        run: |
+          env
+      - name: github context
+        env:
+          CTX: ${{ toJSON( github ) }}
+        run: |
+          jq . <<<"$CTX"
+      - name: Find artifact
+        id: run
+        env:
+          TOKEN: ${{ github.token }}
+          URL: ${{ github.event.workflow_run.artifacts_url }}
+        run: |
+          sleep 10
