@@ -1,6 +1,10 @@
 # Changelog
 Fake changelog for testing.
 
+## 1.2.4 - 2022-09-08
+
+This is a fake changelog entry for testing.
+
 ## 1.2.3 - 2022-09-08
 
 This is a fake changelog entry for testing.
