@@ -13,6 +13,12 @@ jobs:
           TOK: ${{ github.token }}
         run: |
           curl -H "Authorization: Bearer $TOK"   https://api.github.com/rate_limit
+      - uses: actions/checkout@v3
+      - name: Rate limits
+        env:
+          TOK: ${{ github.token }}
+        run: |
+          curl -H "Authorization: Bearer $TOK"   https://api.github.com/rate_limit
       - name: Env
         run: env
       - name: Event data
