@@ -8,6 +8,11 @@ jobs:
     name: Test
     runs-on: ubuntu-latest
     steps:
+      - name: Rate limits
+        env:
+          TOK: ${{ github.token }}
+        run: |
+          curl -H "Authorization: Bearer $TOK"   https://api.github.com/rate_limit
       - name: Env
         run: env
       - name: Event data
