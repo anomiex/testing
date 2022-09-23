@@ -16,3 +16,4 @@ jobs:
       - name: Check composer config
         run: |
           composer config -g --list
+          env
