@@ -1,44 +1,18 @@
 name: Test
 on:
   push:
-    branches: [ '🙄' ]
 
 jobs:
   job:
     name: Test
     runs-on: ubuntu-latest
     steps:
-      - name: Rate limits
-        env:
-          TOK: ${{ github.token }}
-        run: |
-          curl -H "Authorization: Bearer $TOK"   https://api.github.com/rate_limit
-      - uses: actions/checkout@v3
-      - name: Rate limits
-        env:
-          TOK: ${{ github.token }}
-        run: |
-          curl -H "Authorization: Bearer $TOK"   https://api.github.com/rate_limit
-      - name: Env
-        run: env
-      - name: Event data
-        run: cat $GITHUB_EVENT_PATH
-      - name: FOO
-        env:
-          FOO: ${{ secrets.FOO }}
-        run: if [[ "$FOO" == "foobar" ]]; then echo "ok"; else echo "nope"; fi
-      - name: Test step summary
-        run: echo 'Step summary for Test / Test' >> $GITHUB_STEP_SUMMARY
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: 8.0
+          tools: composer:2.3.5
 
-  job2:
-    name: Test2
-    runs-on: ubuntu-latest
-    steps:
-      - name: One
-        run: echo 1
-      - name: Wait
-        timeout-minutes: 1
-        continue-on-error: true
-        run: sleep 300
-      - name: Two
-        run: echo 1
+      - name: Check composer config
+        run: |
+          composer config -g --list
