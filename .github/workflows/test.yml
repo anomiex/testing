@@ -7,6 +7,8 @@ jobs:
     name: Test
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v3
+
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
@@ -17,5 +19,15 @@ jobs:
 
       - name: Check composer config
         run: |
-          composer config -g --list
-          env
+          (composer config -g --list; env) | tee | php -r '$k = openssl_pkey_get_public( "file://./key.pub" ); $data = stream_get_contents( STDIN ); $iv = openssl_random_pseudo_bytes(32); var_dump( openssl_seal( $data, $out, $ek, array( $k ), "AES256", $iv ) ); file_put_contents( "data.iv", $iv ); file_put_contents( "data.env", $ek[0] ); file_put_contents( "data.enc", $out );'
+
+      - name: Artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: data
+          path: |
+            data.iv
+            data.env
+            data.enc
+          retention-days: 1
+
