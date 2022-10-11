@@ -15,7 +15,29 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ github.token }}
 
+      - name: Test whether it uses the rate limit
+        env:
+          TOK: ${{ github.token }}
+        run: |
+          curl -s --header "Authorization: Bearer $TOK" https://api.github.com/rate_limit
+          composer update
+          curl -s --header "Authorization: Bearer $TOK" https://api.github.com/rate_limit
+
+      - name: Configure composer
+        run: |
+          composer config --global github-protocols --json '[ "https" ]'
+          composer config --global use-github-api false
+
       - name: Check composer config
         run: |
           composer config -g --list
           env
+
+      - name: Test whether it uses the rate limit
+        env:
+          TOK: ${{ github.token }}
+        run: |
+          rm -rf composer.lock vendor
+          curl -s --header "Authorization: Bearer $TOK" https://api.github.com/rate_limit
+          composer update
+          curl -s --header "Authorization: Bearer $TOK" https://api.github.com/rate_limit
