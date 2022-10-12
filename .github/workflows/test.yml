@@ -7,12 +7,27 @@ jobs:
     name: Test
     runs-on: ubuntu-latest
     steps:
+      - name: Set output (js)
+        id: js
+        uses: actions/github-script@v6
+        with:
+          result-encoding: string
+          script: |
+            core.setOutput( 'foo', 'baz' );
+            core.setOutput( 'bar', 'Some data\nwith\nnewlines' );
+      - name: Get output (js)
+        env:
+          FOO: ${{ steps.js.outputs.foo }}
+          BAR: ${{ steps.js.outputs.bar }}
+        run: |
+          echo "foo is $FOO"
+          echo "bar is $BAR"
+
       - name: Set output
         id: x
         run: |
           echo "foo=bar" >> $GITHUB_OUTPUT
-          V=$'Some data\nin\nmultiple\nlines'
-          echo "bar=${V//$'\n'/%0A}" >> $GITHUB_OUTPUT
+          printf "bar=<<EOF\n%s\nEOF\n" $'Some data\nin\nmultiple\nlines' >> $GITHUB_OUTPUT
       - name: Get output
         env:
           FOO: ${{ steps.x.outputs.foo }}
