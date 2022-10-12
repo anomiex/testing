@@ -11,7 +11,8 @@ jobs:
         id: x
         run: |
           echo "foo=bar" >> $GITHUB_OUTPUT
-          printf "bar=<<EOF\n%s\nEOF\n" $'Some data\nin\nmultiple\nlines' >> $GITHUB_OUTPUT
+          V=$'Some data\nin\nmultiple\nlines'
+          echo "bar=${V//$'\n'/%0A}" >> $GITHUB_OUTPUT
       - name: Get output
         env:
           FOO: ${{ steps.x.outputs.foo }}
