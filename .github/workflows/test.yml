@@ -1,44 +1,21 @@
 name: Test
 on:
   push:
-    branches: [ '🙄' ]
 
 jobs:
   job:
     name: Test
     runs-on: ubuntu-latest
     steps:
-      - name: Rate limits
-        env:
-          TOK: ${{ github.token }}
+      - name: Set output
+        id: x
         run: |
-          curl -H "Authorization: Bearer $TOK"   https://api.github.com/rate_limit
-      - uses: actions/checkout@v3
-      - name: Rate limits
+          echo "foo=bar" >> $GITHUB_OUTPUT
+          printf "bar=<<EOF\n%s\nEOF\n" $'Some data\nin\nmultiple\nlines' >> $GITHUB_OUTPUT
+      - name: Get output
         env:
-          TOK: ${{ github.token }}
+          FOO: ${{ steps.x.outputs.foo }}
+          BAR: ${{ steps.x.outputs.bar }}
         run: |
-          curl -H "Authorization: Bearer $TOK"   https://api.github.com/rate_limit
-      - name: Env
-        run: env
-      - name: Event data
-        run: cat $GITHUB_EVENT_PATH
-      - name: FOO
-        env:
-          FOO: ${{ secrets.FOO }}
-        run: if [[ "$FOO" == "foobar" ]]; then echo "ok"; else echo "nope"; fi
-      - name: Test step summary
-        run: echo 'Step summary for Test / Test' >> $GITHUB_STEP_SUMMARY
-
-  job2:
-    name: Test2
-    runs-on: ubuntu-latest
-    steps:
-      - name: One
-        run: echo 1
-      - name: Wait
-        timeout-minutes: 1
-        continue-on-error: true
-        run: sleep 300
-      - name: Two
-        run: echo 1
+          echo "foo is $FOO"
+          echo "bar is $BAR"
