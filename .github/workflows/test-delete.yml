@@ -1,0 +1,14 @@
+name: Test delete
+on:
+  delete:
+    branches: [ 'deleteme' ]
+
+jobs:
+  job:
+    name: Test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Env
+        run: env
+      - name: Event data
+        run: cat $GITHUB_EVENT_PATH
