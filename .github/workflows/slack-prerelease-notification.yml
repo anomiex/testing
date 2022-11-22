@@ -35,14 +35,14 @@ jobs:
                       type: "mrkdwn",
                       text: ":holdontoyourbutts: Incoming release! Prerelease branch was created by \( $e.sender.login ).",
                     },
-                  },
+                  }
                 ],
               }'
             )"
           elif [[ "$GITHUB_EVENT_NAME" == 'delete' ]]; then
             gh_set_output message "$(
               jq -nc --slurpfile event "$GITHUB_EVENT_PATH" '$event[0] as $e | {
-                icon_emoji: ":lock:",
+                icon_emoji: ":unlock:",
                 text: "Prerelease branch was deleted by \( $e.sender.login ).",
                 blocks: [
                   {
@@ -51,7 +51,7 @@ jobs:
                       type: "mrkdwn",
                       text: "Prerelease branch was deleted by \( $e.sender.login ).",
                     },
-                  },
+                  }
                 ],
               }'
             )"
