@@ -21,11 +21,13 @@ jobs:
         run: |
           source .github/files/gh-funcs.sh
 
+          cat "$GITHUB_EVENT_PATH"
+
           if [[ "$GITHUB_EVENT_NAME" == 'create' ]]; then
             gh_set_output message "$(
               jq -nc --slurpfile event "$GITHUB_EVENT_PATH" '$event[0] as $e | {
                 icon_emoji: ":lock:",
-                text: "Incoming release! Prerelease branch was created by \( $e.sender.login \).",
+                text: "Incoming release! Prerelease branch was created by \( $e.sender.login ).",
                 blocks: [
                   {
                     type: "section",
@@ -41,13 +43,13 @@ jobs:
             gh_set_output message "$(
               jq -nc --slurpfile event "$GITHUB_EVENT_PATH" '$event[0] as $e | {
                 icon_emoji: ":lock:",
-                text: "Prerelease branch was deleted by \( $e.sender.login \).",
+                text: "Prerelease branch was deleted by \( $e.sender.login ).",
                 blocks: [
                   {
                     type: "section",
                     text: {
                       type: "mrkdwn",
-                      text: "Prerelease branch was deleted by \( $e.sender.login \).",
+                      text: "Prerelease branch was deleted by \( $e.sender.login ).",
                     },
                   },
                 ],
