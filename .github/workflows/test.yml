@@ -12,7 +12,7 @@ jobs:
             echo "-- $i --"
             time for (( j=0; j<1024; j++ )); do
               printf "%1024d" "$j" > "$i-$j.txt"
-            done
+            done 2>&1
           done
 
   job2:
@@ -24,6 +24,6 @@ jobs:
             echo "-- $i --"
             time for (( j=0; j<1024; j++ )); do
               printf "%1024d" "$j" > "$j.txt"
-            done
+            done 2>&1
             time rm *.txt
           done
