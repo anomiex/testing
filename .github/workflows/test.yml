@@ -1,44 +1,29 @@
 name: Test
 on:
   push:
-    branches: [ '🙄' ]
 
 jobs:
   job:
-    name: Test
+    name: Test lots of files
     runs-on: ubuntu-latest
     steps:
-      - name: Rate limits
-        env:
-          TOK: ${{ github.token }}
-        run: |
-          curl -H "Authorization: Bearer $TOK"   https://api.github.com/rate_limit
-      - uses: actions/checkout@v3
-      - name: Rate limits
-        env:
-          TOK: ${{ github.token }}
-        run: |
-          curl -H "Authorization: Bearer $TOK"   https://api.github.com/rate_limit
-      - name: Env
-        run: env
-      - name: Event data
-        run: cat $GITHUB_EVENT_PATH
-      - name: FOO
-        env:
-          FOO: ${{ secrets.FOO }}
-        run: if [[ "$FOO" == "foobar" ]]; then echo "ok"; else echo "nope"; fi
-      - name: Test step summary
-        run: echo 'Step summary for Test / Test' >> $GITHUB_STEP_SUMMARY
+      - run: |
+        for (( i=0; i<1024; i++ )); do
+          echo "-- $i --"
+          time for (( j=0; j<1024; j++ )); do
+            printf "%1024d" "$j" > "$i-$j.txt"
+          done
+        done
 
   job2:
-    name: Test2
+    name: Test deleting lots of files
     runs-on: ubuntu-latest
     steps:
-      - name: One
-        run: echo 1
-      - name: Wait
-        timeout-minutes: 1
-        continue-on-error: true
-        run: sleep 300
-      - name: Two
-        run: echo 1
+      - run: |
+        for (( i=0; i<1024; i++ )); do
+          echo "-- $i --"
+          time for (( j=0; j<1024; j++ )); do
+            printf "%1024d" "$j" > "$j.txt"
+          done
+          time rm *.txt
+        done
