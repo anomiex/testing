@@ -10,20 +10,38 @@ jobs:
       - run: |
           for (( i=0; i<1024; i++ )); do
             echo "-- $i --"
-            time for (( j=0; j<1024; j++ )); do
+            SECONDS=0
+            { time for (( j=0; j<1024; j++ )); do
               printf "%1024d" "$j" > "$i-$j.txt"
-            done 2>&1
+            done; } 2>&1
+            echo $SECONDS
           done
 
   job2:
+    name: Test lots of empty files
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          for (( i=0; i<1024; i++ )); do
+            echo "-- $i --"
+            SECONDS=0
+            { time for (( j=0; j<1024; j++ )); do
+              printf "" > "$i-$j.txt"
+            done; } 2>&1
+            echo $SECONDS
+          done
+
+  job3:
     name: Test deleting lots of files
     runs-on: ubuntu-latest
     steps:
       - run: |
           for (( i=0; i<1024; i++ )); do
             echo "-- $i --"
-            time for (( j=0; j<1024; j++ )); do
+            SECONDS=0
+            { time for (( j=0; j<1024; j++ )); do
               printf "%1024d" "$j" > "$j.txt"
-            done 2>&1
+            done; } 2>&1
             time rm *.txt
+            echo $SECONDS
           done
