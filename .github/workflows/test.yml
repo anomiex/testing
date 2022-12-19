@@ -8,22 +8,22 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - run: |
-        for (( i=0; i<1024; i++ )); do
-          echo "-- $i --"
-          time for (( j=0; j<1024; j++ )); do
-            printf "%1024d" "$j" > "$i-$j.txt"
+          for (( i=0; i<1024; i++ )); do
+            echo "-- $i --"
+            time for (( j=0; j<1024; j++ )); do
+              printf "%1024d" "$j" > "$i-$j.txt"
+            done
           done
-        done
 
   job2:
     name: Test deleting lots of files
     runs-on: ubuntu-latest
     steps:
       - run: |
-        for (( i=0; i<1024; i++ )); do
-          echo "-- $i --"
-          time for (( j=0; j<1024; j++ )); do
-            printf "%1024d" "$j" > "$j.txt"
+          for (( i=0; i<1024; i++ )); do
+            echo "-- $i --"
+            time for (( j=0; j<1024; j++ )); do
+              printf "%1024d" "$j" > "$j.txt"
+            done
+            time rm *.txt
           done
-          time rm *.txt
-        done
