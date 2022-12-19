@@ -17,6 +17,20 @@ jobs:
             echo $SECONDS
           done
 
+  job1:
+    name: Test lots of large files
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          for (( i=0; i<1024; i++ )); do
+            echo "-- $i --"
+            SECONDS=0
+            { time for (( j=0; j<1024; j++ )); do
+              printf "%10240d" "$j" > "$i-$j.txt"
+            done; } 2>&1
+            echo $SECONDS
+          done
+
   job2:
     name: Test lots of small files
     runs-on: ubuntu-latest
