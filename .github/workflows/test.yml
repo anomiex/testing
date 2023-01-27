@@ -34,11 +34,5 @@ jobs:
     name: Test2
     runs-on: ubuntu-latest
     steps:
-      - name: One
-        run: echo 1
-      - name: Wait
-        timeout-minutes: 1
-        continue-on-error: true
-        run: sleep 300
-      - name: Two
-        run: echo 1
+      - run: echo '::error::Error 1'
+      - run: echo '[foo][bar][baz] ::error::Error 2'
