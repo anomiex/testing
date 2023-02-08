@@ -34,5 +34,6 @@ jobs:
     name: Test2
     runs-on: ubuntu-latest
     steps:
+      - run: strace --help
       - run: echo '::error::Error 1'
       - run: echo '[foo][bar][baz] ::error::Error 2'
