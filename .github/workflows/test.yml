@@ -2,38 +2,15 @@ name: Test
 on:
   push:
     branches: [ '🙄' ]
+  pull_request_target:
+    types: [opened, reopened, synchronize, edited, labeled, closed ]
 
 jobs:
   job:
     name: Test
     runs-on: ubuntu-latest
     steps:
-      - name: Rate limits
-        env:
-          TOK: ${{ github.token }}
-        run: |
-          curl -H "Authorization: Bearer $TOK"   https://api.github.com/rate_limit
-      - uses: actions/checkout@v3
-      - name: Rate limits
-        env:
-          TOK: ${{ github.token }}
-        run: |
-          curl -H "Authorization: Bearer $TOK"   https://api.github.com/rate_limit
       - name: Env
         run: env
       - name: Event data
         run: cat $GITHUB_EVENT_PATH
-      - name: FOO
-        env:
-          FOO: ${{ secrets.FOO }}
-        run: if [[ "$FOO" == "foobar" ]]; then echo "ok"; else echo "nope"; fi
-      - name: Test step summary
-        run: echo 'Step summary for Test / Test' >> $GITHUB_STEP_SUMMARY
-
-  job2:
-    name: Test2
-    runs-on: ubuntu-latest
-    steps:
-      - run: strace --help
-      - run: echo '::error::Error 1'
-      - run: echo '[foo][bar][baz] ::error::Error 2'
