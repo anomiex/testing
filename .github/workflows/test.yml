@@ -13,4 +13,8 @@ jobs:
       - name: Env
         run: env
       - name: Event data
+        env:
+          DATA: ${{ toJson( github ) }}
+        run: echo $DATA
+      - name: Event file
         run: cat $GITHUB_EVENT_PATH
