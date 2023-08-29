@@ -33,7 +33,7 @@ jobs:
   job3:
     name: Job 3
     runs-on: ubuntu-latest
-    if: success()
+    if: always() && ! cancelled() && ! failure()
     needs: job2
     steps:
       - run: true
