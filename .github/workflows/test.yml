@@ -23,17 +23,20 @@ jobs:
     name: Job 2 ${{matrix.a}}
     runs-on: ubuntu-latest
     needs: job1
+    if: ${{ 'a' == 'b' }}
     strategy:
       matrix:
-        include: ${{ fromJson( '[{"a":1},{"a":2}]' ) }}
+        include: ${{ fromJson( '[]' ) }}
     steps:
-      - run: |
-          [[ ${{ matrix.a }} == "1" ]]
+      - run: true
 
   job3:
     name: Job 3
     runs-on: ubuntu-latest
-    if: always() && ! cancelled() && ! failure()
+    if: >
+      always() &&
+      ! cancelled() &&
+      ! failure()
     needs: job2
     steps:
       - run: true
