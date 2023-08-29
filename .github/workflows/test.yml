@@ -6,7 +6,7 @@ on:
     types: [opened, reopened, synchronize, edited, labeled, closed ]
 
 jobs:
-  job:
+  job1:
     name: Test
     runs-on: ubuntu-latest
     steps:
@@ -18,3 +18,18 @@ jobs:
         run: echo $DATA
       - name: Event file
         run: cat $GITHUB_EVENT_PATH
+ 
+  job2:
+    needs: job1
+    if: "a" == "b"
+    strategy:
+      matrix:
+        include: ${{ fromJson( "[]" ) }}
+    steps:
+      - run: true
+
+  job3:
+    needs: job2
+    steps:
+      - run: true
+
