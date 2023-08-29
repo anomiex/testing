@@ -33,11 +33,11 @@ jobs:
   job3:
     name: Job 3
     runs-on: ubuntu-latest
-    if: ${{
+    if: |
         always() &&
+        # comment?
         ! cancelled() &&
         ! failure()
-      }}
     needs: job2
     steps:
       - run: true
