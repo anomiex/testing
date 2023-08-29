@@ -18,7 +18,7 @@ jobs:
         run: echo $DATA
       - name: Event file
         run: cat $GITHUB_EVENT_PATH
- 
+
   job2:
     name: Job 2
     runs-on: ubuntu-latest
