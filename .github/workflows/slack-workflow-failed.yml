@@ -42,7 +42,7 @@ jobs:
             BRANCH=$(jq -r '.workflow_run.head_branch' "$GITHUB_EVENT_PATH")
             echo "branch=$BRANCH" >> "$GITHUB_OUTPUT"
             DATA=$( jq -nc --slurpfile event "$GITHUB_EVENT_PATH" '$event[0] as $e | $e.workflow_run as $run |
-              ( $run.head_commit.message | sub( "\n.*"; ""; "m" ) | match( " \\(#([0-9]+)\\)$" ).captures[0].string ) // null as $pr |
+              ( $run.head_commit.message | sub( "\n.*"; ""; "m" ) | match( " \\(#([0-9]+)\\)$" ).captures[0].string // null ) as $pr |
               {
                 workflow_name: $e.workflow.name,
                 branch: $run.head_branch,
