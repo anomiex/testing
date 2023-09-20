@@ -53,7 +53,7 @@ jobs:
                 author: ( $run.head_commit.author.name ),
                 commit_url: "\( $run.head_repository.html_url )/commit/\( $run.head_commit.id )",
                 pr: $pr,
-                pr_url: "\( $run.head_repository.html_url )/pull/\( $pr )"
+                pr_url: ( if $pr then "\( $run.head_repository.html_url )/pull/\( $pr )" else null end )
               }
             ' )
           fi
