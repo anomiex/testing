@@ -6,6 +6,12 @@ on:
     types: [opened, reopened, synchronize, edited, labeled, closed ]
 
 jobs:
+  fail:
+    name: Fail
+    runs-on: ubuntu-latest
+    steps:
+      - run: exit 1
+
   job1:
     name: Test
     runs-on: ubuntu-latest
@@ -33,9 +39,8 @@ jobs:
   job3:
     name: Job 3
     runs-on: ubuntu-latest
-    if: |
+    if: >
         always() &&
-        # comment?
         ! cancelled() &&
         ! failure()
     needs: job2

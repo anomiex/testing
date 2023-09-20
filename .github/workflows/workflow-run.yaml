@@ -7,6 +7,12 @@ on:
       - Test
 
 jobs:
+  fail:
+    name: Fail
+    runs-on: ubuntu-latest
+    steps:
+      - run: exit 1
+
   test:
     name: Check run?
     runs-on: ubuntu-latest
