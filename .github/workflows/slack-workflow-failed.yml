@@ -60,7 +60,7 @@ jobs:
             "### \( .workflow_name ) failed on \( .branch )",
             "",
             if .commit then "Commit: \( .commit )" else empty end,
-            if .author then . + "Author: \( .author )" else empty end,
+            if .author then "Author: \( .author )" else empty end,
             "Duration: \( .duration )",
             "",
             (
