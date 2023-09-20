@@ -47,7 +47,7 @@ jobs:
                 run_id: $run.id,
                 run_url: $run.html_url,
                 duration: ( ( $run.updated_at | fromdateiso8601 ) - ( $run.run_started_at | fromdateiso8601 ) | strftime( "%H:%M:%S" ) ),
-                commit: ( $run.head_commit.id[0:8] ) \( $run.head_commit.message | sub( "\n.*"; ""; "m" ) ),
+                commit: "\( $run.head_commit.id[0:8] ) \( $run.head_commit.message | sub( "\n.*"; ""; "m" ) )",
                 author: ( $run.head_commit.author.name ),
                 commit_url: "\( $run.head_repository.html_url )/commit/\( $run.head_commit.id )",
                 pr: $pr,
@@ -59,15 +59,15 @@ jobs:
           jq -r '[
             "### \( .workflow_name ) failed on \( .branch )",
             "",
-            if .commit then "Commit: \( .commit \)" else empty end,
-            if .author then . + "Author: \( .author\)" else empty end,
-            "Duration: \( .duration \)",
+            if .commit then "Commit: \( .commit )" else empty end,
+            if .author then . + "Author: \( .author )" else empty end,
+            "Duration: \( .duration )",
             "",
             (
               [
                 "[Run #\( .run_id )](\( .run_url ))",
-                if .commit_url then "[Commit](\( .commit_url \))" else empty end,
-                if .pr then "[PR #\( .pr \)](\( .pr_url \))" else empty end,
+                if .commit_url then "[Commit](\( .commit_url ))" else empty end,
+                if .pr then "[PR #\( .pr )](\( .pr_url ))" else empty end,
               ] | join( " | " )
             )
           ] | join( "\n" )' <<<"$DATA" >> $GITHUB_STEP_SUMMARY
