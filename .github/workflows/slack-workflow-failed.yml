@@ -67,7 +67,7 @@ jobs:
               [
                 "[Run #\( .run_id )](\( .run_url ))",
                 if .commit_url then "[Commit](\( .commit_url ))" else empty end,
-                if .pr then "[PR #\( .pr )](\( .pr_url ))" else empty end,
+                if .pr then "[PR #\( .pr )](\( .pr_url ))" else empty end
               ] | join( " | " )
             )
           ] | join( "\n" )' <<<"$DATA" >> $GITHUB_STEP_SUMMARY
@@ -129,7 +129,7 @@ jobs:
                         text: "PR #\( .pr )"
                       },
                       url: .pr_url,
-                    } else empty end,
+                    } else empty end
                   ]
                 }
               ]
