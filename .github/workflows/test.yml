@@ -6,6 +6,12 @@ on:
     types: [opened, reopened, synchronize, edited, labeled, closed ]
 
 jobs:
+  cpu:
+    name: CPU info
+    runs-on: ubuntu-latest
+    steps:
+      - run: lscpu
+
   fail:
     name: Fail
     runs-on: ubuntu-latest
