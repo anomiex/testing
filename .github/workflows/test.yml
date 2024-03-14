@@ -52,3 +52,10 @@ jobs:
     needs: job2
     steps:
       - run: true
+
+  job4:
+    name: bin?
+    runs-on: ubuntu-latest
+    steps:
+      - run: ls /usr/bin
+
