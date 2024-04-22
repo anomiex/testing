@@ -1,0 +1,27 @@
+name: Test push-to-mirrors
+on:
+  push:
+
+jobs:
+  test:
+    name: Push to mirrors
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          path: repo
+
+      - run: |
+          mkdir -p build/anomiex/testing2/
+          echo "XXX" > build/anomiex/testing2/foo.txt
+          echo anomiex/testing2 > build/mirrors.txt
+
+      - uses: automattic/jetpack/projects/github-actions/push-to-mirrors@fix/push-to-mirrors-slow
+        env:
+          GIT_TRACE: true
+          GIT_TRACE_PERFORMANCE: true
+        with:
+          source-directory: ${{ github.workspace }}/repo
+          token: ${{ secrets.PATOK }}
+          username: 'github-actions[bot]'
+          working-directory: ${{ github.workspace }}/build
