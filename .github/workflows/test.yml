@@ -12,6 +12,19 @@ jobs:
     steps:
       - run: lscpu
 
+  colors:
+    name: Color test
+    runs-on: ubuntu-latest
+    steps:
+      - name: env
+        run: env
+      - name: "-t"
+        run: if [[ -t 1 ]]; then echo "Has color"; else echo "No color"; fi
+      - name: tput colors
+        run: tput colors
+      - name: tput dim
+        run: tput dim | xxd -g 1
+
   fail:
     name: Fail
     runs-on: ubuntu-latest
