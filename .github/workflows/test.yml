@@ -25,6 +25,11 @@ jobs:
       - name: tput dim
         run: |
           { tput dim || true; } | xxd -g 1
+          if [[ -n "$(tput dim 2>/dev/null)" ]]; then
+            echo "has dim"
+          else
+            echo "no dim"
+          fi
       - name: Color-16 test
         run: |
           printf "Attributes:\n"
