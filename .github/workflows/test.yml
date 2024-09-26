@@ -189,3 +189,20 @@ jobs:
       - run: sudo apt-get install -y subversion
       - run: which svn || echo "not found"
 
+  job6:
+    name: imagick?
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: 8.2
+          ini-values: error_reporting=E_ALL, display_errors=On, zend.assertions=1
+          tools: composer:2.7.7
+          extensions: mysql, imagick
+          coverage: none
+
+      - name: php info
+        run: php -i
+      - name: version
+        run: php -r 'var_dump( Imagick::getVersion() );'
