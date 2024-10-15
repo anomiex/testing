@@ -1,208 +1,40 @@
 name: Test
 on:
   push:
-    branches: [ '🙄' ]
-  pull_request_target:
-    types: [opened, reopened, synchronize, edited, labeled, closed ]
+
+env:
+  COMPOSER_ROOT_VERSION: "dev-trunk"
 
 jobs:
-  cpu:
-    name: CPU info
-    runs-on: ubuntu-latest
-    steps:
-      - run: lscpu
-
-  colors:
-    name: Color test
-    runs-on: ubuntu-latest
-    steps:
-      - name: env
-        run: env
-      - name: "-t"
-        run: if [[ -t 1 ]]; then echo "True"; else echo "False"; fi
-      - name: tput colors
-        run: tput colors || true
-      - name: tput dim
-        run: |
-          { tput dim || true; } | xxd -g 1
-          if [[ -n "$(tput dim 2>/dev/null)" ]]; then
-            echo "has dim"
-          else
-            echo "no dim"
-          fi
-      - name: Color-16 test
-        run: |
-          printf "Attributes:\n"
-          for (( c=0; c<10; c++ )); do
-            printf " \e[%dm%d\e[0m" $c $c
-          done
-          for c in 20 51 52 53; do
-            printf " \e[%dm%d\e[0m" $c $c
-          done
-          printf "\n\n"
-
-          printf "System colors:\n"
-          printf "fg: "
-          for (( c=0; c<8; c++ )); do
-            printf " \e[3%dm%d\e[0m" $c $c
-          done
-          printf "\n"
-
-          printf "    "
-          for (( c=0; c<8; c++ )); do
-            printf " \e[1;3%dm%d\e[0m" $c $c
-          done
-          printf "\n"
-
-          printf "bg: "
-          for (( c=0; c<8; c++ )); do
-            printf " \e[4%dm%d\e[0m" $c $c
-          done
-          printf "\n\n"
-
-          printf "Bright colors:\n"
-          printf "fg: (normal) "
-          for (( c=0; c<8; c++ )); do
-            printf " \e[3%dm%d\e[0m\e[9%dm%d\e[0m" $c $c $c $c
-          done
-          printf "\n"
-
-          printf "    (bold)   "
-          for (( c=0; c<8; c++ )); do
-            printf " \e[1;3%dm%d\e[0m\e[9%dm%d\e[0m" $c $c $c $c
-          done
-          printf "\n"
-
-          printf "bg: "
-          for (( c=0; c<8; c++ )); do
-            printf " \e[4%dm%d\e[0m\e[10%dm%d\e[0m" $c $c $c $c
-          done
-          printf "\n\n"
-
-      - name: Color-256 test
-        run: |
-          printf "System colors:\n"
-          for (( c=0; c<16; c++ )); do
-            printf " \e[38;5;%dm%2d\e[0m" $c $c
-          done
-          printf "\n\n"
-
-          printf "Color cube:\n"
-          for (( k=0; k<6; k+=3 )); do
-            for (( g=0; g<6; g++ )); do
-              for (( r=k; r<k+3; r++ )); do
-                for (( b=0; b<6; b++ )); do
-                  c=$(( 16 + r*36 + g*6 + b ))
-                  printf " \e[38;5;%dm%3d\e[0m" $c $c
-                done
-                printf "  "
-              done
-              printf "\n"
-            done
-            printf "\n"
-          done
-
-          printf "Greyscale:\n"
-          for (( c=232; c<256; c++ )); do
-            printf " \e[38;5;%dm%d\e[0m" $c $c
-          done
-          printf "\n"
-
-      - name: Color-24bit test
-        run: |
-          printf "Color cube:\n"
-          n=24
-          for (( b=0; b<=255+n; b+=n )); do
-            if [[ $b -gt 255 ]]; then bb=255; else bb=$b; fi
-            for (( r=0; r<=255+n; r+=n )); do
-              if [[ $r -gt 255 ]]; then rr=255; else rr=$r; fi
-              for (( g=0; g<=255+n; g+=n )); do
-                if [[ $g -gt 255 ]]; then gg=255; else gg=$g; fi
-                printf "\e[38;2;%d;%d;%dmX\e[0m" $rr $gg $bb
-              done
-              printf " "
-            done
-            printf "\n"
-          done
-          printf "\n"
-
-          printf "Color strips:\n"
-          for p in '%d;0;0' '%d;%d;0' '0;%d;0' '0;%d;%d' '0;0;%d' '%d;0;%d' '%d;%d;%d'; do
-            for (( i=0; i<=255; i+=2 )); do
-              printf "\e[38;2;${p}mX\e[0m" $i $i $i | sed 's/\[0m.*/\[0m/'
-            done
-            printf "\n"
-          done
-
-  fail:
-    name: Fail
-    runs-on: ubuntu-latest
-    steps:
-      - run: exit 1
-
-  job1:
-    name: Test
-    runs-on: ubuntu-latest
-    steps:
-      - name: Env
-        run: env
-      - name: Event data
-        env:
-          DATA: ${{ toJson( github ) }}
-        run: echo $DATA
-      - name: Event file
-        run: cat $GITHUB_EVENT_PATH
-
-  job2:
-    name: Job 2 ${{matrix.a}}
-    runs-on: ubuntu-latest
-    needs: job1
-    if: ${{ 'a' == 'b' }}
+  test:
+    name: Test ${{ matrix.on }}
+    runs-on: ${{ matrix.on }}
     strategy:
       matrix:
-        include: ${{ fromJson( '[]' ) }}
+        on: [ ubuntu-22.04 ubuntu-24.04 ]
     steps:
-      - run: true
+      - uses: actions/checkout@v4
 
-  job3:
-    name: Job 3
-    runs-on: ubuntu-latest
-    if: >
-        always() &&
-        ! cancelled() &&
-        ! failure()
-    needs: job2
-    steps:
-      - run: true
-
-  job4:
-    name: bin?
-    runs-on: ubuntu-latest
-    steps:
-      - run: ls /usr/bin
-
-  job5:
-    name: svn?
-    runs-on: ubuntu-24.04
-    steps:
-      - run: which svn || echo "not found"
-      - run: sudo apt-get install -y subversion
-      - run: which svn || echo "not found"
-
-  job6:
-    name: imagick?
-    runs-on: ubuntu-24.04
-    steps:
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: 8.2
+          php-version: 7.0
           ini-values: error_reporting=E_ALL, display_errors=On, zend.assertions=1
-          tools: composer:2.7.7
+          tools: composer:2.2.24
           extensions: mysql, imagick
           coverage: none
 
-      - name: php info
-        run: php -i
-      - name: version
-        run: php -r 'var_dump( Imagick::getVersion() );'
+      - name: Configure composer
+        run: |
+          composer config --global github-protocols https
+          composer config --global use-github-api false
+
+      - name: Versions
+        run: |
+          php --version
+          composer --version
+
+      - name: Install
+        run: |
+          composer update
+
