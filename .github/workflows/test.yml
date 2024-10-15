@@ -7,11 +7,11 @@ env:
 
 jobs:
   test:
-    name: Test ${{ matrix.on }}
-    runs-on: ${{ matrix.on }}
+    name: Test ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        on: [ ubuntu-22.04 ubuntu-24.04 ]
+        os: [ ubuntu-22.04, ubuntu-24.04 ]
     steps:
       - uses: actions/checkout@v4
 
