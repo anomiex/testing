@@ -206,23 +206,3 @@ jobs:
         run: php -i
       - name: version
         run: php -r 'var_dump( Imagick::getVersion() );'
-
-  dynamic-steps-1:
-    name: Prepare dynamic steps
-    runs-on: ubuntu-latest
-    outputs:
-      steps: ${{ steps.xxx.outputs.steps }}
-    steps:
-      - id: xxx
-        run: |
-          jq -n '[
-            { run: "echo 'Step 1'" },
-            { run: "echo 'Step 2'" },
-            { run: "echo 'Step 3'" },
-          ]' >> "$GITHUB_OUTPUT"
-
-  dynamic-steps-2:
-    name: Run dynamic steps
-    runs-on: ubuntu-latest
-    needs: dynamic-steps-1
-    steps: ${{ fromJson( needs.dynamic-steps-1.outputs.steps }}
