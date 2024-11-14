@@ -206,3 +206,11 @@ jobs:
         run: php -i
       - name: version
         run: php -r 'var_dump( Imagick::getVersion() );'
+
+  job7:
+    name: sem?
+    runs-on: ubuntu-24.04
+    steps:
+      - run: which sem || echo "not found"
+      - run: sudo apt-get install -y parallel
+      - run: which sem || echo "not found"
