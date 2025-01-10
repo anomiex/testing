@@ -214,3 +214,9 @@ jobs:
       - run: which sem || echo "not found"
       - run: sudo apt-get install -y parallel
       - run: which sem || echo "not found"
+
+  job8:
+    name: docker?
+    runs-on: ubuntu-24.04
+    steps:
+      - run: docker buildx inspect --bootstrap
