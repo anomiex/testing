@@ -13,8 +13,8 @@ jobs:
       a: ${{ steps.output.outputs.a }}
       b: ${{ steps.output.outputs.b }}
       x: ${{ steps.output.outputs.x }}
-      foo: ${{ steps.foo.conclusion == 'success' }}
-      bar: ${{ steps.bar.conclusion == 'success' }}
+      foo: ${{ steps.foo.conclusion == 'success' && 'true' || '' }}
+      bar: ${{ steps.bar.conclusion == 'success' && 'true' || '' }}
 
     steps:
       - name: output
