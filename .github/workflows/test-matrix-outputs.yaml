@@ -9,7 +9,7 @@ jobs:
     strategy:
       matrix:
         var: [ 'a', 'b' ]
-    output:
+    outputs:
       a: ${{ steps.output.outputs.a }}
       b: ${{ steps.output.outputs.b }}
       x: ${{ steps.output.outputs.x }}
