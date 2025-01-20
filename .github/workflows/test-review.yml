@@ -1,0 +1,13 @@
+name: Test
+on:
+  pull_request:
+
+jobs:
+  review:
+    name: Review
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check auth
+        run: gh auth status
+      - name: Leave review
+        run: echo -e 'This is a bot review.\n\nIt has some content.' | gh pr review --request-changes --body-file -
