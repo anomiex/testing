@@ -8,6 +8,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check auth
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: gh auth status
       - name: Leave review
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: echo -e 'This is a bot review.\n\nIt has some content.' | gh pr review --request-changes --body-file -
