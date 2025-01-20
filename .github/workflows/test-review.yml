@@ -14,4 +14,5 @@ jobs:
       - name: Leave review
         env:
           GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: echo -e 'This is a bot review.\n\nIt has some content.' | gh pr review --request-changes --body-file -
+          ISSUE: ${{ github.event.issue.html_url }}
+        run: echo -e 'This is a bot review.\n\nIt has some content.' | gh pr review "$ISSUE" --request-changes --body-file -
