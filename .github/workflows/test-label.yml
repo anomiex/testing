@@ -1,0 +1,14 @@
+name: Test label event
+on:
+  pull_request:
+    types: [ labeled, unlabeled ]
+
+jobs:
+  job:
+    name: Job
+    runs-on: ubuntu-latest
+    steps:
+      - name: Info
+        env:
+          EVENT: ${{ toJson( github.event ) }}
+        run: jq . <<<"$EVENT"
