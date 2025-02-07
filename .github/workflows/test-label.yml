@@ -2,6 +2,7 @@ name: Test label event
 on:
   pull_request:
     types: [ labeled, unlabeled ]
+  workflow_dispatch:
 
 jobs:
   job:
@@ -10,5 +11,5 @@ jobs:
     steps:
       - name: Info
         env:
-          EVENT: ${{ toJson( github.event ) }}
+          EVENT: ${{ toJson( github ) }}
         run: jq . <<<"$EVENT"
