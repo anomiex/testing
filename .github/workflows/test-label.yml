@@ -13,3 +13,10 @@ jobs:
         env:
           EVENT: ${{ toJson( github ) }}
         run: jq . <<<"$EVENT"
+      - name: Skip
+        if: false
+        id: a-step
+        run: echo "FOO=bar" >> "$GITHUB_OUTPUT"
+      - env:
+          FOO: ${{ steps.a-step.outputs.FOO }}
+        run: echo "FOO=$FOO"
