@@ -12,3 +12,11 @@ jobs:
           TOKEN: ${{ github.token }}
         run: |
           curl -v --no-progress-meter --header "Authorization: Bearer $TOKEN" https://api.github.com/rate_limit
+      - name: Check rate limit (no auth)
+        run: |
+          curl -v --no-progress-meter https://api.github.com/rate_limit
+      - name: Check rate limit (cli)
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh api /rate_limit
