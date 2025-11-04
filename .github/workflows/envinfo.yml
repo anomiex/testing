@@ -17,8 +17,7 @@ jobs:
         run: |
           echo "PATH=$PATH"
           IFS=: read -r -d '' -a ARR < <( printf "%s:\0" "$PATH" )
-          echo "${ARR[@]}"
-          ls "${ARR[@]}"
+          ls "${ARR[@]}" || true
 
   colors:
     name: Color test
