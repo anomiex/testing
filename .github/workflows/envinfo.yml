@@ -14,7 +14,10 @@ jobs:
       - name: disk
         run: df -h
       - name: bin
-        run: ls /usr/bin
+        run: |
+          echo "PATH=$PATH"
+          IFS=: read -r -d '' -a ARR < <( printf "%s" "$PATH" )
+          ls "${ARR[@]}"
 
   colors:
     name: Color test
