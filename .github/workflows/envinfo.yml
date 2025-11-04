@@ -16,7 +16,8 @@ jobs:
       - name: bin
         run: |
           echo "PATH=$PATH"
-          IFS=: read -r -d '' -a ARR < <( printf "%s" "$PATH" )
+          IFS=: read -r -d '' -a ARR < <( printf "%s:\0" "$PATH" )
+          echo "${ARR[@]}"
           ls "${ARR[@]}"
 
   colors:
