@@ -1,0 +1,22 @@
+name: Test permissions
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  job:
+    name: Test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - run: |
+          export GIT_AUTHOR_NAME=matticbot
+          export GIT_AUTHOR_EMAIL=matticbot@users.noreply.github.com
+          export GIT_COMMITTER_NAME=matticbot
+          export GIT_COMMITTER_EMAIL=matticbot@users.noreply.github.com
+
+          git tag permissions-test
+          git push origin permissions-test
