@@ -1,0 +1,13 @@
+name: Scheduled run 2
+on:
+  schedule:
+    - cron: '18 * * * *'
+
+jobs:
+  test_schedule:
+    runs-on: ubuntu-latest
+    env:
+      FOO: ${{ case( github.event.inputs.dryRun == 'no', 'null', github.event.inputs.dryRun || 'null' ) }}
+    steps:
+      - run: |
+          echo "ok: $FOO"
