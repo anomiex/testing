@@ -224,7 +224,7 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - name: Step 1
-        if: &lintcond true
+        if: &lintcond github.job == "anchor1"
         run: echo ok
       - name: Step 2
         if: *lintcond
@@ -238,11 +238,11 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - name: Step 1
-        if: &lintcond false
+        if: &lintcond2 github.job == "anchor1"
         run: echo ok
       - name: Step 2
-        if: *lintcond
+        if: *lintcond2
         run: echo ok
       - name: Step 3
-        if: *lintcond
+        if: *lintcond2
         run: echo ok
