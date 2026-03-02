@@ -253,19 +253,18 @@ jobs:
     steps:
       - name: Create file
         run: |
-          echo ok > test.txt
-          echo ok > test2.txt
+          mkdir a
+          echo ok > a/test.txt
+          echo ok > a/test2.txt
       - name: Upload artifact, zipped
         uses: actions/upload-artifact@v7
         with:
           name: zipped-artifact
-          path: test.txt
-          compression-level: 0
+          path: a/test.txt
           archive: true
       - name: Upload artifact, not zipped
         uses: actions/upload-artifact@v7
         with:
-          name: not-zipped-artifact
-          path: test2.txt
+          path: a/test2.txt
           compression-level: 0
           archive: false
