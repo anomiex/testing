@@ -252,7 +252,9 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
       - name: Create file
-        run: echo ok > test.txt
+        run: |
+          echo ok > test.txt
+          echo ok > test2.txt
       - name: Upload artifact, zipped
         uses: actions/upload-artifact@v7
         with:
@@ -264,6 +266,6 @@ jobs:
         uses: actions/upload-artifact@v7
         with:
           name: not-zipped-artifact
-          path: test.txt
+          path: test2.txt
           compression-level: 0
           archive: false
