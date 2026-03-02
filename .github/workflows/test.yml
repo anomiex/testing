@@ -220,7 +220,7 @@ jobs:
       - run: docker buildx inspect --bootstrap
 
   anchor1:
-    name: Anchor test
+    name: Anchor test 1
     runs-on: ubuntu-24.04
     steps:
       - name: Step 1
@@ -234,7 +234,7 @@ jobs:
         run: echo ok
 
   anchor2:
-    name: Anchor test
+    name: Anchor test 2
     runs-on: ubuntu-24.04
     steps:
       - name: Step 1
@@ -246,3 +246,24 @@ jobs:
       - name: Step 3
         if: *lintcond2
         run: echo ok
+
+  artifact:
+    name: Artifact test
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Create file
+        run: echo ok > test.txt
+      - name: Upload artifact, zipped
+        uses: actions/upload-artifact@v7
+        with:
+          name: zipped-artifact
+          path: test.txt
+          compression-level: 0
+          archive: false
+      - name: Upload artifact, not zipped
+        uses: actions/upload-artifact@v7
+        with:
+          name: not-zipped-artifact
+          path: test.txt
+          compression-level: 0
+          archive: false
