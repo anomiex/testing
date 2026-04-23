@@ -10,6 +10,7 @@ jobs:
   fail:
     name: Fail
     runs-on: ubuntu-latest
+    if: false
     steps:
       - run: exit 1
 
