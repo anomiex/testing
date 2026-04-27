@@ -273,6 +273,11 @@ jobs:
     name: Node parallelism
     runs-on: ubuntu-24.04
     steps:
+      - name: Setup Node
+        uses: actions/setup-node@v6
+        with:
+          node-version: ^24
+
       - run: |
           node --version
           node -e 'console.log( os.availableParallelism() );'
