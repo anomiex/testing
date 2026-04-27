@@ -268,3 +268,11 @@ jobs:
           path: a/test2.txt
           compression-level: 0
           archive: false
+
+  node_parallelism:
+    name: Node parallelism
+    runs-on: ubuntu-24.04
+    steps:
+      - run: |
+          node --version
+          node -e 'console.log( os.availableParallelism() );'
