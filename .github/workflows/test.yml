@@ -281,3 +281,12 @@ jobs:
       - run: |
           node --version
           node -e 'console.log( os.availableParallelism() );'
+
+  core:
+    name: Core files
+    runs-on: ubuntu-24.04
+    steps:
+      - name: ulimit -c
+        run: ulimit -c
+      - name: /proc/sys/kernel/core_pattern
+        run: cat /proc/sys/kernel/core_pattern
