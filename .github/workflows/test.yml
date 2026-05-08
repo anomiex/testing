@@ -290,3 +290,7 @@ jobs:
         run: ulimit -c
       - name: /proc/sys/kernel/core_pattern
         run: cat /proc/sys/kernel/core_pattern
+      - name: /proc/sys/kernel/core_pattern writable?
+        run: |
+          echo "/tmp/core" | sudo tee /proc/sys/kernel/core_pattern
+          cat /proc/sys/kernel/core_pattern
