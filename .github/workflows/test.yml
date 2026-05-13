@@ -186,13 +186,14 @@ jobs:
   job6:
     name: imagick and pcov on 8.4?
     runs-on: ubuntu-24.04
+    permissions: {}
     steps:
       - name: Setup PHP
         uses: shivammathur/setup-php@v2
         with:
           php-version: 8.4
           ini-values: error_reporting=E_ALL, display_errors=On, zend.assertions=1
-          tools: composer:2.7.7
+          tools: composer:2.9.8
           extensions: mysql, imagick
           coverage: pcov
 
@@ -200,6 +201,10 @@ jobs:
         run: php -i
       - name: version
         run: php -r 'var_dump( Imagick::getVersion() );'
+      - name: ???
+        run: |
+          composer config --global --list
+          cat /home/runner/.composer/auth.json
 
   job7:
     name: sem?
