@@ -20,8 +20,8 @@ jobs:
           sudo apt-get build-dep git
           git clone --depth=1 https://github.com/git/git
           cd git
-          git fetch --depth=1 origin fa383b96c7211a415152dffaf6b272bb09116f06
-          git checkout fa383b96c7211a415152dffaf6b272bb09116f06
+          git fetch --depth=1 origin 22c9b6bd93ef8975deebd2a4439aa428ab22118b
+          git checkout 22c9b6bd93ef8975deebd2a4439aa428ab22118b
           make -j 4
           make install
           cd ~
