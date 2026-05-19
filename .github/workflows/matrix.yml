@@ -5,32 +5,33 @@ on:
       - '🙄'
 
 permissions:
+  actions: read
   contents: read
 
 jobs:
-  build:
-    name: Build git
-    runs-on: ubuntu-latest
-    steps:
-      - run: |
-          sudo sed -i -e 's/Types: deb/Types: deb deb-src/' /etc/apt/sources.list.d/ubuntu.sources
-
-          sudo apt-get update
-          sudo apt-get build-dep git
-          git clone --depth=1 --branch=v2.53.0 https://github.com/git/git
-          cd git
-          make
-      - uses: actions/upload-artifact@v7
-        with:
-          name: git
-          path: git/git
-          retention-days: 1
+#  build:
+#    name: Build git
+#    runs-on: ubuntu-latest
+#    steps:
+#      - run: |
+#          sudo sed -i -e 's/Types: deb/Types: deb deb-src/' /etc/apt/sources.list.d/ubuntu.sources
+#
+#          sudo apt-get update
+#          sudo apt-get build-dep git
+#          git clone --depth=1 --branch=v2.53.0 https://github.com/git/git
+#          cd git
+#          make
+#      - uses: actions/upload-artifact@v7
+#        with:
+#          name: git
+#          path: git/git
+#          retention-days: 1
 
   test:
     name: Test git deepen ${{ matrix.n }}
     runs-on: ubuntu-latest
     timeout-minutes: 5
-    needs: [ build ]
+#    needs: [ build ]
     strategy:
       matrix:
         n: [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20 ]
@@ -38,7 +39,11 @@ jobs:
       - uses: actions/download-artifact@v7
         with:
           name: git
+          run-id: 26119928835
+          github-token: ${{ github.secret }}
       - run: |
+          chmod +x git
+
           function git {
             printf '\e[32mgit'
             printf ' %q' "$@"
