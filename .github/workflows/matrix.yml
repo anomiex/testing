@@ -36,13 +36,14 @@ jobs:
       matrix:
         n: [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20 ]
     steps:
-      - uses: actions/download-artifact@v7
-        with:
-          name: git
-          run-id: 26119928835
-          github-token: ${{ github.secret }}
+#      - uses: actions/download-artifact@v7
+#        with:
+#          name: git
+      - uses: actions/checkout@v6
       - run: |
+          unzip git.zip
           chmod +x git
+          rm -rf .git
 
           function git {
             printf '\e[32mgit'
