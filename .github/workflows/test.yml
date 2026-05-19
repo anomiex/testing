@@ -201,10 +201,6 @@ jobs:
         run: php -i
       - name: version
         run: php -r 'var_dump( Imagick::getVersion() );'
-      - name: ???
-        run: |
-          composer config --global --list
-          cat /home/runner/.composer/auth.json
 
   job7:
     name: sem?
