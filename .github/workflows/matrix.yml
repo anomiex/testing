@@ -16,8 +16,8 @@ jobs:
         n: [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20 ]
     steps:
       - run: |
-          wget https://archive.ubuntu.com/ubuntu/pool/main/g/git/git_2.53.0-1ubuntu1_amd64.deb
-          sudo dpkg -i git_2.53.0-1ubuntu1_amd64.deb
+          sudo apt-get update
+          sudo apt-get install --allow-downgrades git=1:2.43.0-1ubuntu7.3 git-man=1:2.43.0-1ubuntu7.3
       - run: |
           function git {
             printf '\e[32mgit'
