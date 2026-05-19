@@ -16,16 +16,30 @@ jobs:
         n: [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20 ]
     steps:
       - run: |
+          function git {
+            printf '\e[32mgit'
+            printf ' %q' "$@"
+            printf '\e[0m\n'
+            /usr/bin/git "$@"
+          }
+
+          git --version
           git init .
-          /usr/bin/git remote add origin https://github.com/Automattic/jetpack
-          /usr/bin/git config --local gc.auto 0
-          /usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=10 origin 57a055c07d944301558ce5727f803ee427abd15d
-          /usr/bin/git sparse-checkout disable
-          /usr/bin/git config --local --unset-all extensions.worktreeConfig
-          /usr/bin/git -c protocol.version=2 fetch --no-tags --prune --progress --no-recurse-submodules --depth=10 origin 57a055c07d944301558ce5727f803ee427abd15d 77c13651933aedae78b1f6a2e3e0cef84943d2a3
+          git remote add origin https://github.com/Automattic/jetpack
+          git config --local gc.auto 0
+          git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=10 origin 57a055c07d944301558ce5727f803ee427abd15d
+          git sparse-checkout disable
+          git config --local --unset-all extensions.worktreeConfig
+          git -c protocol.version=2 fetch --no-tags --prune --progress --no-recurse-submodules --depth=10 origin 57a055c07d944301558ce5727f803ee427abd15d 77c13651933aedae78b1f6a2e3e0cef84943d2a3
           echo "---"
+          stat .git/shallow
           cat .git/shallow
           echo "---"
-          /usr/bin/git -c protocol.version=2 fetch --no-tags --prune --progress --no-recurse-submodules --depth=20 origin 57a055c07d944301558ce5727f803ee427abd15d 77c13651933aedae78b1f6a2e3e0cef84943d2a3
+          EXIT=0
+          if ! git -c protocol.version=2 fetch --no-tags --prune --progress --no-recurse-submodules --depth=20 origin 57a055c07d944301558ce5727f803ee427abd15d 77c13651933aedae78b1f6a2e3e0cef84943d2a3; then
+            EXIT=1
+          fi
           echo "---"
+          stat .git/shallow
           cat .git/shallow
+          exit $EXIT
