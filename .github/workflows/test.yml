@@ -301,6 +301,10 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        include: ${{ fromJson( '[]' ) }}
+        foo: [ '' ]
+        exclude:
+          - foo: ''
     steps:
-      - run: true
+      - env:
+          FOO: ${{ matrix.foo }}
+        run: echo "$FOO" | xxd -g 1
