@@ -4,6 +4,7 @@ on:
 
 jobs:
   call-workflow:
+    name: 'Call'
     uses: ./.github/workflows/test-reusable-callee.yml
 
   check:
