@@ -1,33 +1,29 @@
 name: Concurrency test
-
 on:
   workflow_dispatch:
+    inputs:
+      workflowgroup:
+        description: Group for the workflow
+        type: choice
+        default: none
+        options:
+          - a
+          - b
+          - none
+      jobgroup:
+        description: Group for the job
+        type: string
 
 concurrency:
-  group: foobar-${{ github.run_id }}
+  group: ${{ case( inputs.workflowgroup == 'none', github.run_id, inputs.workflowgroup ) }}
   cancel-in-progress: true
 
 jobs:
-  a:
-    name: A
+  thejob:
+    name: The job; workflowgroup=${{ inputs.workflowgroup }} jobgroup=${{ inputs.jobgroup }}
     runs-on: ubuntu-latest
     concurrency:
-      group: xyz
-      cancel-in-progress: true
+      group: ${{ inputs.jobgroup }}
+      queue: max
     steps:
-      - run: sleep 120
-  b:
-    name: B
-    runs-on: ubuntu-latest
-    concurrency:
-      group: xyz
-      cancel-in-progress: true
-    steps:
-      - run: sleep 120
-  c:
-    name: C
-    runs-on: ubuntu-latest
-    concurrency:
-      group: xxx-${{ github.run_id }}
-    steps:
-      - run: sleep 120
+      - run: sleep 300
