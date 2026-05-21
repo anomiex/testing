@@ -14,3 +14,10 @@ jobs:
           retention-days: 1
           compression-level: 0
           archive: false
+
+  otherjob:
+    name: Other job
+    runs-on: ubuntu-latest
+    if: false
+    steps:
+      - run: exit 1
