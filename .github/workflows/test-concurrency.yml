@@ -2,28 +2,33 @@ name: Concurrency test
 on:
   workflow_dispatch:
     inputs:
-      workflowgroup:
-        description: Group for the workflow
-        type: choice
-        default: none
-        options:
-          - a
-          - b
-          - none
-      jobgroup:
-        description: Group for the job
-        type: string
+      delay:
+        description: Job delay
+        required: true
+        type: number
+        default: 60
 
-concurrency:
-  group: ${{ case( inputs.workflowgroup == 'none', github.run_id, inputs.workflowgroup ) }}
-  cancel-in-progress: true
+env:
+  DELAY: ${{ inputs.delay }}
 
 jobs:
-  thejob:
-    name: The job; workflowgroup=${{ inputs.workflowgroup }} jobgroup=${{ inputs.jobgroup }}
+  a:
+    name: A
+    runs-on: ubuntu-latest
+    steps:
+      - run: sleep "$DELAY"
+  b:
+    name: B
+    needs: [ a ]
+    runs-on: ubuntu-latest
+    steps:
+      - run: sleep 10
+  c:
+    name: C
+    needs: [ b ]
     runs-on: ubuntu-latest
     concurrency:
-      group: ${{ inputs.jobgroup }}
+      group: test
       queue: max
     steps:
-      - run: sleep 300
+      - run: sleep 10
