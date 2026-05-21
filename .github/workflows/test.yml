@@ -295,3 +295,12 @@ jobs:
         run: |
           echo "/tmp/core" | sudo tee /proc/sys/kernel/core_pattern
           cat /proc/sys/kernel/core_pattern
+
+  emptymatrix:
+    name: Empty matrix
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include: ${{ fromJson( '[]' ) }}
+    steps:
+      - run: true
