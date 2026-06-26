@@ -319,8 +319,9 @@ jobs:
         run: &counter |
           i=0
           while [[ $SECONDS -lt 20 ]]; do
-            echo $((++i))
+            ((++i))
           done
+          echo "Count: $i"
 
       - parallel:
           - name: V1
