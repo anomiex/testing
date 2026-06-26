@@ -310,3 +310,36 @@ jobs:
       - env:
           FOO: ${{ matrix.foo }}
         run: echo "$FOO" | xxd -g 1
+
+  parallel:
+    name: Parallel steps
+    runs-on: ubuntu-latest
+    steps:
+      - name: Non-parallel
+        run: &counter |
+          i=0
+          while [[ $SECONDS -lt 20 ]]; do
+            echo $((++i))
+          done
+
+      - parallel:
+          - name: V1
+            run: *counter
+          - name: V2
+            run: *counter
+          - name: V3
+            run: *counter
+          - name: V4
+            run: *counter
+          - name: V5
+            run: *counter
+          - name: V6
+            run: *counter
+          - name: V7
+            run: *counter
+          - name: V8
+            run: *counter
+          - name: V9
+            run: *counter
+          - name: V10
+            run: *counter
