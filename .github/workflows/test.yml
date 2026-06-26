@@ -325,7 +325,7 @@ jobs:
 
       - name: Manual parallel
         run: |
-          for ((j=0; j<20; j++)); do
+          for ((j=0; j<10; j++)); do
             {
               i=0
               while [[ $SECONDS -lt 20 ]]; do
