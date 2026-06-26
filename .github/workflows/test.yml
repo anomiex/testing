@@ -316,8 +316,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Non-parallel
-        run: &counter |
-          for ((i=0; i<3000000; i++)); do :; done
+        run: |
+          for ((j=0; j<10; j++)); do
+            for ((i=0; i<3000000; i++)); do :; done
+          done
 
       - name: Manual parallel
         run: |
@@ -330,7 +332,8 @@ jobs:
 
       - parallel:
           - name: V1
-            run: *counter
+            run: &counter |
+              for ((i=0; i<3000000; i++)); do :; done
           - name: V2
             run: *counter
           - name: V3
