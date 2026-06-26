@@ -323,6 +323,19 @@ jobs:
           done
           echo "Count: $i"
 
+      - name: Manual parallel
+        run: |
+          for ((j=0; j<20; j++)); do
+            {
+              i=0
+              while [[ $SECONDS -lt 20 ]]; do
+                ((++i))
+              done
+              echo "Count: $i"
+            } &
+          done
+          wait
+
       - parallel:
           - name: V1
             run: *counter
@@ -344,3 +357,17 @@ jobs:
             run: *counter
           - name: V10
             run: *counter
+
+      - parallel:
+          - run: sleep 10
+          - run: sleep 10
+          - run: sleep 10
+          - run: sleep 10
+          - run: sleep 10
+          - run: sleep 10
+          - run: sleep 10
+          - run: sleep 10
+          - run: sleep 10
+          - run: sleep 10
+          - run: sleep 10
+          - run: sleep 10
