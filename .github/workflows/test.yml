@@ -317,13 +317,13 @@ jobs:
     steps:
       - name: Non-parallel
         run: &counter |
-          for ((i=0; i<1000000; i++)); do :; done
+          for ((i=0; i<3000000; i++)); do :; done
 
       - name: Manual parallel
         run: |
           for ((j=0; j<10; j++)); do
             {
-              for ((i=0; i<1000000; i++)); do :; done
+              for ((i=0; i<3000000; i++)); do :; done
             } &
           done
           wait
