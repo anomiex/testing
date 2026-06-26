@@ -317,21 +317,13 @@ jobs:
     steps:
       - name: Non-parallel
         run: &counter |
-          i=0
-          while [[ $SECONDS -lt 20 ]]; do
-            ((++i))
-          done
-          echo "Count: $i"
+          for ((i=0; i<1000000; i++)); do :; done
 
       - name: Manual parallel
         run: |
           for ((j=0; j<10; j++)); do
             {
-              i=0
-              while [[ $SECONDS -lt 20 ]]; do
-                ((++i))
-              done
-              echo "Count: $i"
+              for ((i=0; i<1000000; i++)); do :; done
             } &
           done
           wait
@@ -357,17 +349,3 @@ jobs:
             run: *counter
           - name: V10
             run: *counter
-
-      - parallel:
-          - run: sleep 10
-          - run: sleep 10
-          - run: sleep 10
-          - run: sleep 10
-          - run: sleep 10
-          - run: sleep 10
-          - run: sleep 10
-          - run: sleep 10
-          - run: sleep 10
-          - run: sleep 10
-          - run: sleep 10
-          - run: sleep 10
