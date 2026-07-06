@@ -361,10 +361,12 @@ jobs:
           - &worker
             name: Worker
             run: |
+              echo "Starting $$"
               X=$$
               echo "PID=$$" >> $GITHUB_OUTPUT
               sleep 3
               echo "X=$X" >> $GITHUB_OUTPUT
+              echo "Finished $$"
           - *worker
           - *worker
           - *worker
