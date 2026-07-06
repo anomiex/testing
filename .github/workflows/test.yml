@@ -358,13 +358,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - parallel:
-          - *worker
-          - *worker
-          - *worker
           - &worker
             name: Worker
             run: |
               echo "PID=$$" >> $GITHUB_OUTPUT
+          - *worker
+          - *worker
+          - *worker
       - name: Output
         env:
           X: ${{ toJson( steps.*.outputs.PID ) }}
