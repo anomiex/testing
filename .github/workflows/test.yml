@@ -361,12 +361,17 @@ jobs:
           - &worker
             name: Worker
             run: |
+              X=$$
               echo "PID=$$" >> $GITHUB_OUTPUT
+              sleep 3
+              echo "X=$X" >> $GITHUB_OUTPUT
           - *worker
           - *worker
           - *worker
       - name: Output
         env:
-          X: ${{ toJson( steps.*.outputs.PID ) }}
+          PIDS: ${{ toJson( steps.*.outputs.PID ) }}
+          XS: ${{ toJson( steps.*.outputs.X ) }}
         run: |
-          jq . <<<"$X"
+          jq . <<<"$PIDS"
+          jq . <<<"$XS"
