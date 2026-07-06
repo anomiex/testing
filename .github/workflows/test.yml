@@ -357,11 +357,10 @@ jobs:
     name: Parallel steps and outputs
     runs-on: ubuntu-latest
     steps:
-      - outputs:
-          XX: ${{ toJson( steps ) }}
-        parallel:
+      - parallel:
           - &worker
             name: Worker
+            id: worker
             run: |
               echo "PID=$$" >> $GITHUB_OUTPUT
           - *worker
@@ -369,6 +368,6 @@ jobs:
           - *worker
       - name: Output
         env:
-          X: ${{ toJson( steps ) }}
+          X: ${{ toJson( steps.*.outputs.PID ) }}
         run: |
           jq . <<<"$X"
