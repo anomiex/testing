@@ -352,3 +352,21 @@ jobs:
             run: *counter
           - name: V10
             run: *counter
+
+  parallel2:
+    name: Parallel steps and outputs
+    runs-on: ubuntu-latest
+    steps:
+      - parallel:
+          - &worker
+            name: Worker
+            run: |
+              echo "PID=$$" >> $GITHUB_OUTPUT
+          - *worker
+          - *worker
+          - *worker
+      - name: Output
+        env:
+          X: ${{ toJson( steps ) }}
+        run: |
+          jq . <<<"$X"
