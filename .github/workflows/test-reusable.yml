@@ -1,6 +1,7 @@
 name: Reusable workflow caller
 on:
   push:
+  pull_request:
 
 jobs:
   call-workflow:
