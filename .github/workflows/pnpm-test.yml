@@ -7,7 +7,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
-      - uses: pnpm/setup@v2
+      - uses: pnpm/setup@703c52620218391530e48b9e8870d5c0082e1b9b
         with:
           version: 11.5.3
           runtime: node@24.15.0
