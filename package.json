@@ -1,1 +1,15 @@
-{"dependencies":{"noop":"^1.0.1"}}
+{
+	"dependencies": {
+		"noop": "^1.0.1"
+	},
+        "devEngines": {
+		"packageManager": {
+			"name": "pnpm",
+			"version": "^11.5.0"
+		}
+	},
+	"engines": {
+		"node": "^24.15.0",
+		"pnpm": "^11.5.0"
+	}
+}
