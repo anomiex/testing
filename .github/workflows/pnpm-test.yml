@@ -11,5 +11,4 @@ jobs:
         with:
           version: 11.25.0
           runtime: node@24.15.0
-          install: false
       - run: git diff
