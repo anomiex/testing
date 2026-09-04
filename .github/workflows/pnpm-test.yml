@@ -11,5 +11,5 @@ jobs:
         with:
           version: ^11
           runtime: node@lts
-          install: false
+          cache: true
       - run: git diff
