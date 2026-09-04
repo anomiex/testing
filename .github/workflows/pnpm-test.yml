@@ -10,4 +10,5 @@ jobs:
       - uses: pnpm/setup@v2
         with:
           version: ^11
+          runtime: node@lts
       - run: git diff
