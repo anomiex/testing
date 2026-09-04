@@ -1,0 +1,10 @@
+name: Pnpm test
+on:
+  push:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    - uses: actions/checkout@v7
+    - uses: pnpm/setup@v2
+    - run: git diff
