@@ -8,4 +8,6 @@ jobs:
     steps:
       - uses: actions/checkout@v7
       - uses: pnpm/setup@703c52620218391530e48b9e8870d5c0082e1b9b
+        with:
+          install: false
       - run: git diff
