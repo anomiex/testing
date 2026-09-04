@@ -5,6 +5,7 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
-    - uses: actions/checkout@v7
-    - uses: pnpm/setup@v2
-    - run: git diff
+    steps:
+      - uses: actions/checkout@v7
+      - uses: pnpm/setup@v2
+      - run: git diff
