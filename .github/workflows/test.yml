@@ -12,7 +12,7 @@ jobs:
     steps:
       - run: |
           head -1000 /etc/apt/sources.list /etc/apt/sources.list.d/*
-      - run: apt-get update
+      - run: sudo apt-get update
 
   cpu:
     name: CPU info
