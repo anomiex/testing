@@ -6,6 +6,14 @@ on:
     types: [opened, reopened, synchronize, edited, labeled, closed ]
 
 jobs:
+  apt:
+    name: Apt
+    runs-on: ubuntu-latest
+    steps:
+      - run: |
+          head -1000 /etc/apt/sources.list /etc/apt/sources.list.d/*
+      - run: apt-get update
+
   cpu:
     name: CPU info
     runs-on: ubuntu-latest
