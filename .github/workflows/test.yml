@@ -369,7 +369,10 @@ jobs:
       - parallel:
           - &worker
             name: Worker
+            env:
+              ID: ${{ github.action }}
             run: |
+              echo "ID=$ID" >> $GITHUB_OUTPUT
               echo "Starting $$"
               X=$$
               echo "PID=$$" >> $GITHUB_OUTPUT
@@ -381,23 +384,10 @@ jobs:
           - *worker
       - name: Output
         env:
+          IDS: ${{ toJson( steps.*.outputs.ID ) }}
           PIDS: ${{ toJson( steps.*.outputs.PID ) }}
           XS: ${{ toJson( steps.*.outputs.X ) }}
         run: |
+          jq . <<<"$IDS"
           jq . <<<"$PIDS"
           jq . <<<"$XS"
-
-  parallel3:
-    name: Parallel steps from json?
-    runs-on: ubuntu-latest
-    steps:
-      - name: Gen
-        id: gen
-        run: |
-          JSON=$(jq -cn '
-            {
-              name: "Worker",
-              run: "for ((i=0; i<3000000; i++)); do :; done"
-            } | [ ., ., ., . ]')
-          echo "J=$JSON" >> $GITHUB_OUTPUT
-      - parallel: ${{ fromJSON( steps.gen.outputs.J ) }}
