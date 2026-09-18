@@ -366,8 +366,7 @@ jobs:
     name: Parallel steps and outputs
     runs-on: ubuntu-latest
     steps:
-      - id: foobar
-        parallel:
+      - parallel:
           - &worker
             name: Worker
             env:
