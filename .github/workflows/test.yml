@@ -366,7 +366,8 @@ jobs:
     name: Parallel steps and outputs
     runs-on: ubuntu-latest
     steps:
-      - parallel:
+      - id: foobar
+        parallel:
           - &worker
             name: Worker
             env:
@@ -384,10 +385,10 @@ jobs:
           - *worker
       - name: Output
         env:
-          IDS: ${{ toJson( steps.*.outputs.ID ) }}
+          STEPS: ${{ toJson( steps ) }}
           PIDS: ${{ toJson( steps.*.outputs.PID ) }}
           XS: ${{ toJson( steps.*.outputs.X ) }}
         run: |
-          jq . <<<"$IDS"
+          jq . <<<"$STEPS"
           jq . <<<"$PIDS"
           jq . <<<"$XS"
