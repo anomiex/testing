@@ -366,22 +366,26 @@ jobs:
     name: Parallel steps and outputs
     runs-on: ubuntu-latest
     steps:
-      - parallel:
-          - &worker
-            name: Worker
-            env:
-              ID: ${{ github.action }}
-            run: |
-              echo "ID=$ID" >> $GITHUB_OUTPUT
-              echo "Starting $$"
-              X=$$
-              echo "PID=$$" >> $GITHUB_OUTPUT
-              sleep 3
-              echo "X=$X" >> $GITHUB_OUTPUT
-              echo "Finished $$"
-          - *worker
-          - *worker
-          - *worker
+      # Parallel runs
+      - &worker
+        name: Worker
+        background: true
+        env:
+          ID: ${{ github.action }}
+        run: |
+          echo "ID=$ID" >> $GITHUB_OUTPUT
+          echo "Starting $$"
+          X=$$
+          echo "PID=$$" >> $GITHUB_OUTPUT
+          sleep 3
+          echo "X=$X" >> $GITHUB_OUTPUT
+          echo "Finished $$"
+      - *worker
+      - *worker
+      - *worker
+      - name: Await background runs
+        id: runs
+        wait-all:
       - name: Output
         env:
           STEPS: ${{ toJson( steps ) }}
