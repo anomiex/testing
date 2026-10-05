@@ -2,8 +2,7 @@ name: Test
 on:
   push:
     branches: [ '🙄' ]
-  pull_request_target:
-    types: [opened, reopened, synchronize, edited, labeled, closed ]
+  pull_request:
 
 jobs:
   apt:
