@@ -1,0 +1,18 @@
+name: Test
+on:
+  pull_request:
+
+jobs:
+  review:
+    name: Review
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check auth
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: gh auth status
+      - name: Leave review
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          ISSUE: ${{ github.event.pull_request.html_url }}
+        run: gh pr review "$ISSUE" --request-changes --body "!"
