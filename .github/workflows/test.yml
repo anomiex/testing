@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - run: |
-          head -1000 /etc/apt/sources.list /etc/apt/sources.list.d/*
+          head -1000 /etc/apt/sources.list /etc/apt/sources.list.d/* /etc/apt/apt-mirrors.txt
       - run: sudo apt-get update
 
   cpu:
