@@ -1,0 +1,34 @@
+name: Output test
+on:
+  push:
+    branches: [ '🙄' ]
+
+jobs:
+  writer:
+    runs-on: ubuntu-latest
+    outputs:
+      a: ${{ steps.output.outputs.a }}
+      b: ${{ steps.output.outputs.b }}
+
+    steps:
+      - id: output
+        run: |
+          if [[ "$GITHUB_RUN_ATTEMPT" == 1 ]]; then
+            echo "a=fail" >> $GITHUB_OUTPUT
+            echo "b=fail" >> $GITHUB_OUTPUT
+            exit 1
+          fi
+          echo "a=aaa" >> $GITHUB_OUTPUT
+          echo "b=" >> $GITHUB_OUTPUT
+
+  reader:
+    runs-on: ubuntu-latest
+    needs: writer
+    if: ${{ ! cancelled() }}
+    steps:
+      - name: output
+        env:
+          A: ${{ needs.writer.outputs.a }}
+          B: ${{ needs.writer.outputs.b }}
+        run: |
+          echo "A=$A B=$B"
