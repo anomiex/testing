@@ -43,6 +43,7 @@ jobs:
   reader:
     runs-on: ubuntu-latest
     needs: run-matrix
+    if: ${{ ! cancelled() }}
     steps:
       - name: output
         env:
