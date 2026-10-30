@@ -19,7 +19,6 @@ jobs:
             exit 1
           fi
           echo "a=aaa" >> $GITHUB_OUTPUT
-          echo "b=" >> $GITHUB_OUTPUT
 
   reader:
     runs-on: ubuntu-latest
