@@ -7,18 +7,14 @@ jobs:
   writer:
     runs-on: ubuntu-latest
     outputs:
-      a: ${{ steps.output.outputs.a }}
-      b: ${{ steps.output.outputs.b }}
+      a: ${{ case( job.status != 'success', job.status, 'ok' ) }}
+      b: ${{ case( job.status != 'success', job.status, '' ) }}
 
     steps:
-      - id: output
-        run: |
+      - run: |
           if [[ "$GITHUB_RUN_ATTEMPT" == 1 ]]; then
-            echo "a=fail" >> $GITHUB_OUTPUT
-            echo "b=fail" >> $GITHUB_OUTPUT
             exit 1
           fi
-          echo "a=aaa" >> $GITHUB_OUTPUT
 
   reader:
     runs-on: ubuntu-latest
