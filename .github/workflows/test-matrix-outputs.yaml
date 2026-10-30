@@ -15,6 +15,7 @@ jobs:
       x: ${{ steps.output.outputs.x }}
       foo: ${{ steps.foo.conclusion == 'success' && 'true' || '' }}
       bar: ${{ steps.bar.conclusion == 'success' && 'true' || '' }}
+      baz: ${{ steps.output.outputs.baz }}
 
     steps:
       - name: output
@@ -28,7 +29,11 @@ jobs:
       - name: foo
         id: foo
         if: matrix.var == 'a'
-        run: true
+        run: |
+          if [[ "$GITHUB_RUN_ATTEMPT" == 1 ]]; then
+            echo "baz=fail" >> $GITHUB_OUTPUT
+            exit 1
+          fi
 
       - name: bar
         id: bar
@@ -46,8 +51,9 @@ jobs:
           X: ${{ needs.run-matrix.outputs.x }}
           FOO: ${{ needs.run-matrix.outputs.foo }}
           BAR: ${{ needs.run-matrix.outputs.bar }}
+          BAZ: ${{ needs.run-matrix.outputs.baz }}
           VALS: ${{ toJSON( needs.run-matrix.outputs ) }}
         run: |
           echo "A=$A B=$B X=$X"
           echo "VALS=$VALS"
-          echo "FOO=$FOO BAR=$BAR"
+          echo "FOO=$FOO BAR=$BAR BAZ=$BAZ"
