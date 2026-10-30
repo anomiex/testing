@@ -15,7 +15,7 @@ jobs:
       x: ${{ steps.output.outputs.x }}
       foo: ${{ steps.foo.conclusion == 'success' && 'true' || '' }}
       bar: ${{ steps.bar.conclusion == 'success' && 'true' || '' }}
-      baz: ${{ steps.output.outputs.baz }}
+      baz: ${{ steps.foo.outputs.baz }}
 
     steps:
       - name: output
