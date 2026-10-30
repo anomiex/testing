@@ -6,13 +6,18 @@ on:
 jobs:
   writer:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        var: [ 'one', 'two' ]
     outputs:
       a: ${{ case( job.status != 'success', job.status, 'ok' ) }}
       b: ${{ case( job.status != 'success', job.status, '' ) }}
 
     steps:
-      - run: |
-          if [[ "$GITHUB_RUN_ATTEMPT" == 1 ]]; then
+      - env:
+          WHICH: ${{ matrix.var }}
+        run: |
+          if [[ "$WHICH" == two && "$GITHUB_RUN_ATTEMPT" == 1 ]]; then
             exit 1
           fi
 
