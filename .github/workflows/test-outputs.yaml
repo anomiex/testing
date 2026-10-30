@@ -9,6 +9,7 @@ jobs:
     strategy:
       matrix:
         var: [ 'one', 'two' ]
+    continue-on-error: true
     outputs:
       a: ${{ case( job.status != 'success', job.status, 'ok' ) }}
       b: ${{ case( job.status != 'success', job.status, '' ) }}
